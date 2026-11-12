@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { AREAS, SUBJECTS } from "./data/areas";
+import Background from "./components/Background";
 import Invitation from "./components/Invitation";
 import "./App.css";
 
@@ -38,6 +39,8 @@ export default function App() {
       className="app"
       style={{ background: theme.bg, color: theme.text, fontFamily: theme.font }}
     >
+      <Background theme={theme} />
+      
       {PREVIOUS[step] && (
         <button className="back" onClick={() => setStep(PREVIOUS[step])}>
           ← Volver

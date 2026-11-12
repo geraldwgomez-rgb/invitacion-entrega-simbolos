@@ -4,15 +4,36 @@
 
 body { margin: 0; }
 
+/* Contenedor general */
 .app {
+  position: relative;
   min-height: 100vh;
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
   padding: 24px;
   transition: background 0.6s ease, color 0.6s ease;
 }
 
+/* Botón de regreso: va en el flujo normal, encima del contenido */
+.back {
+  width: 100%;
+  max-width: 480px;
+  margin-bottom: 16px;
+  padding: 8px 0;
+  background: none;
+  border: none;
+  color: inherit;
+  font-size: 0.95rem;
+  text-align: left;
+  cursor: pointer;
+  opacity: 0.8;
+  transition: opacity 0.2s;
+}
+.back:hover { opacity: 1; }
+
+/* Pantallas */
 .screen {
   width: 100%;
   max-width: 480px;
@@ -31,6 +52,7 @@ body { margin: 0; }
 h1 { font-size: 2.2rem; margin: 0; }
 h2 { font-size: 1.6rem; margin: 0; }
 
+/* Formulario */
 input, select {
   width: 100%;
   padding: 12px;
@@ -42,6 +64,12 @@ input, select {
   font-family: inherit;
 }
 
+select,
+select option {
+  background: #ffffff;
+  color: #1b2535;
+}
+
 label {
   width: 100%;
   display: flex;
@@ -50,6 +78,7 @@ label {
   text-align: left;
 }
 
+/* Botones */
 .btn {
   padding: 12px 28px;
   border: none;
@@ -63,6 +92,7 @@ label {
 .btn:hover:not(:disabled) { transform: translateY(-2px); }
 .btn:disabled { opacity: 0.4; cursor: not-allowed; }
 
+/* Tarjetas de rol */
 .role-cards {
   display: flex;
   gap: 16px;
@@ -85,19 +115,43 @@ label {
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
 }
 
-/* Invitación */
+/* Invitación: fondo plateado con destellos */
 .invitation {
-  background: var(--bg);
-  color: var(--text);
-  font-family: var(--font);
-  border: 2px solid var(--primary);
-  border-radius: 20px;
-  padding: 36px 28px;
+  --mx: 50%;
+  --my: 30%;
+  --px: 0;
+  --py: 0;
+
+  position: relative;
+  overflow: hidden;
   width: 100%;
-  box-shadow: 0 0 0 6px var(--bg), 0 0 0 8px var(--accent);
+  padding: 44px 28px 36px;
+  border-radius: 20px;
+  border: 2px solid var(--primary);
+  background: linear-gradient(
+    135deg,
+    #f8f9fb 0%,
+    #e3e7ee 40%,
+    #ffffff 55%,
+    #d5dbe5 100%
+  );
+  color: #1b2535;
+  font-family: var(--font);
   text-align: center;
+  box-shadow: 0 0 0 6px #e3e7ee, 0 0 0 8px var(--accent),
+    0 20px 40px rgba(0, 0, 0, 0.25);
+  touch-action: pan-y;
 }
-.invitation h1 { color: var(--primary); }
+
+.invitation > *:not(.sparkles):not(.glow) {
+  position: relative;
+  z-index: 1;
+}
+
+.invitation h1 {
+  color: var(--primary);
+  margin-top: 8px;
+}
 
 .details {
   list-style: none;
@@ -107,11 +161,13 @@ label {
   flex-direction: column;
   gap: 12px;
 }
+
 .details li {
   display: flex;
   flex-direction: column;
   font-size: 1.05rem;
 }
+
 .details span {
   font-size: 0.75rem;
   text-transform: uppercase;
@@ -121,41 +177,127 @@ label {
 
 .importance {
   font-style: italic;
-  opacity: 0.85;
+  color: #3b4558;
   line-height: 1.6;
 }
-.app {
-  position: relative;
+
+/* Etiqueta de promoción */
+.badge {
+  display: inline-block;
+  padding: 6px 16px;
+  border-radius: 999px;
+  background: var(--primary);
+  color: #ffffff;
+  font-size: 0.8rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
 }
 
-/* Botón de regreso */
-.back {
+.cap {
+  display: flex;
+  justify-content: center;
+  margin: 16px 0 4px;
+}
+
+/* Brillo y destellos interactivos */
+.glow {
   position: absolute;
-  top: 16px;
-  left: 16px;
-  padding: 8px 12px;
-  background: none;
-  border: none;
-  color: inherit;
-  font-size: 0.95rem;
-  cursor: pointer;
-  opacity: 0.8;
-  transition: opacity 0.2s;
-}
-.back:hover {
-  opacity: 1;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  background: radial-gradient(
+    circle 180px at var(--mx) var(--my),
+    rgba(245, 197, 66, 0.35),
+    transparent 70%
+  );
 }
 
-/* Select legible: colores fijos para el cuadro y para las opciones */
-select,
-select option {
-  background: #ffffff;
-  color: #1b2535;
+.sparkles {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
 }
+
+.sparkle-wrap {
+  position: absolute;
+  transform: translate(
+    calc(var(--px) * var(--depth) * 16px),
+    calc(var(--py) * var(--depth) * 16px)
+  );
+  transition: transform 0.5s ease-out;
+}
+
+.sparkle {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background: radial-gradient(circle, #fffbe0 0%, #f5c542 45%, transparent 70%);
+  box-shadow: 0 0 10px #f5c542;
+}
+
+/* Fondo animado: degradado + estrellas */
+.bg-layer {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  z-index: 0;
+  pointer-events: none;
+  background: var(--bg-base);
+}
+
+.bg-gradient {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    120deg,
+    var(--bg-base) 0%,
+    color-mix(in srgb, var(--bg-glow) 22%, var(--bg-base)) 50%,
+    var(--bg-base) 100%
+  );
+  background-size: 200% 200%;
+  animation: bg-drift 14s ease-in-out infinite alternate;
+}
+
+@keyframes bg-drift {
+  from { background-position: 0% 50%; }
+  to { background-position: 100% 50%; }
+}
+
+.bg-star {
+  position: absolute;
+  border-radius: 50%;
+  background: var(--bg-glow);
+  box-shadow: 0 0 6px var(--bg-glow);
+  animation-name: twinkle;
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: infinite;
+}
+
+@keyframes twinkle {
+  0%, 100% { opacity: 0.15; transform: scale(0.8); }
+  50% { opacity: 0.9; transform: scale(1.2); }
+}
+
+/* Mantiene el contenido por encima del fondo */
+.screen,
+.back {
+  position: relative;
+  z-index: 1;
+}
+
 /* Responsive */
+@media (min-width: 601px) and (max-width: 900px) {
+  .screen,
+  .back {
+    max-width: 560px;
+  }
+}
+
 @media (max-width: 600px) {
   .app {
-    padding: 56px 16px 24px; /* deja espacio para el botón Volver */
+    padding: 16px 16px 24px;
   }
 
   h1 { font-size: 1.8rem; }
@@ -173,7 +315,7 @@ select option {
 
   .invitation {
     padding: 24px 18px;
-    box-shadow: 0 0 0 4px var(--bg), 0 0 0 6px var(--accent);
+    box-shadow: 0 0 0 4px #e3e7ee, 0 0 0 6px var(--accent);
   }
 
   .details li {
@@ -181,8 +323,10 @@ select option {
   }
 }
 
-@media (min-width: 601px) and (max-width: 900px) {
-  .screen {
-    max-width: 560px;
+/* Quita el movimiento para quien tenga activada la opción de reducir animaciones */
+@media (prefers-reduced-motion: reduce) {
+  .bg-gradient,
+  .bg-star {
+    animation: none;
   }
 }
