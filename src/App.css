@@ -1,0 +1,188 @@
+@import url("https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Inter:wght@400;600&family=Space+Grotesk:wght@400;600&family=Dancing+Script:wght@600&family=JetBrains+Mono&display=swap");
+
+* { box-sizing: border-box; }
+
+body { margin: 0; }
+
+.app {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  transition: background 0.6s ease, color 0.6s ease;
+}
+
+.screen {
+  width: 100%;
+  max-width: 480px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  align-items: center;
+}
+
+.emblem, .symbol {
+  font-size: 4rem;
+  color: var(--primary, #c9a227);
+}
+
+h1 { font-size: 2.2rem; margin: 0; }
+h2 { font-size: 1.6rem; margin: 0; }
+
+input, select {
+  width: 100%;
+  padding: 12px;
+  font-size: 1rem;
+  border: 1px solid currentColor;
+  border-radius: 8px;
+  background: transparent;
+  color: inherit;
+  font-family: inherit;
+}
+
+label {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  text-align: left;
+}
+
+.btn {
+  padding: 12px 28px;
+  border: none;
+  border-radius: 999px;
+  background: #c9a227;
+  color: #0f1626;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: transform 0.2s, opacity 0.2s;
+}
+.btn:hover:not(:disabled) { transform: translateY(-2px); }
+.btn:disabled { opacity: 0.4; cursor: not-allowed; }
+
+.role-cards {
+  display: flex;
+  gap: 16px;
+  width: 100%;
+}
+
+.role-card {
+  flex: 1;
+  padding: 32px 16px;
+  border: 1px solid currentColor;
+  border-radius: 16px;
+  background: transparent;
+  color: inherit;
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: transform 0.25s, box-shadow 0.25s;
+}
+.role-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+}
+
+/* Invitación */
+.invitation {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font);
+  border: 2px solid var(--primary);
+  border-radius: 20px;
+  padding: 36px 28px;
+  width: 100%;
+  box-shadow: 0 0 0 6px var(--bg), 0 0 0 8px var(--accent);
+  text-align: center;
+}
+.invitation h1 { color: var(--primary); }
+
+.details {
+  list-style: none;
+  padding: 0;
+  margin: 24px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.details li {
+  display: flex;
+  flex-direction: column;
+  font-size: 1.05rem;
+}
+.details span {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: var(--primary);
+}
+
+.importance {
+  font-style: italic;
+  opacity: 0.85;
+  line-height: 1.6;
+}
+.app {
+  position: relative;
+}
+
+/* Botón de regreso */
+.back {
+  position: absolute;
+  top: 16px;
+  left: 16px;
+  padding: 8px 12px;
+  background: none;
+  border: none;
+  color: inherit;
+  font-size: 0.95rem;
+  cursor: pointer;
+  opacity: 0.8;
+  transition: opacity 0.2s;
+}
+.back:hover {
+  opacity: 1;
+}
+
+/* Select legible: colores fijos para el cuadro y para las opciones */
+select,
+select option {
+  background: #ffffff;
+  color: #1b2535;
+}
+/* Responsive */
+@media (max-width: 600px) {
+  .app {
+    padding: 56px 16px 24px; /* deja espacio para el botón Volver */
+  }
+
+  h1 { font-size: 1.8rem; }
+  h2 { font-size: 1.35rem; }
+
+  .emblem, .symbol { font-size: 3rem; }
+
+  .role-cards {
+    flex-direction: column;
+  }
+
+  .role-card {
+    padding: 20px 16px;
+  }
+
+  .invitation {
+    padding: 24px 18px;
+    box-shadow: 0 0 0 4px var(--bg), 0 0 0 6px var(--accent);
+  }
+
+  .details li {
+    font-size: 0.95rem;
+  }
+}
+
+@media (min-width: 601px) and (max-width: 900px) {
+  .screen {
+    max-width: 560px;
+  }
+}
